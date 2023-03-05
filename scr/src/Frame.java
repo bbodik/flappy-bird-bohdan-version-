@@ -19,9 +19,9 @@ public class Frame extends JFrame {
                 Thread jumpThread = new Thread(() -> {
                     for (int i = 0; i < 25; i++) {
                         int temp = bird.getY();
-                        bird.setLocation(50, temp - 6); // move bird upwards
+                        bird.setLocation(50, temp - 6);
                         try {
-                            Thread.sleep(12); // add a short delay for animation
+                            Thread.sleep(12);
                         } catch (InterruptedException error) {
                             System.exit(2);
                         }
@@ -30,8 +30,13 @@ public class Frame extends JFrame {
                 jumpThread.start();
             }
         });
-        add(backgroundLabel);
+        Thread firstCollum=new Thread(()->{
 
+        });
+        Thread secondCollum=new Thread(()->{
+
+        });
+        add(backgroundLabel);
         setVisible(true);
     }
 

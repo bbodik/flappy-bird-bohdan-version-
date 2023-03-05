@@ -12,7 +12,6 @@ public class bohdanBird extends JLabel {
         setVisible(true);
         t = new Thread(() -> {
             try {
-                Thread.sleep(3000);
                 while (isAlive) {
                     int temp = getY();
                     setLocation(50, temp + 1);
