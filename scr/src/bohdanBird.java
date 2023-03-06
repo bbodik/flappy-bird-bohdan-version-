@@ -14,7 +14,7 @@ public class bohdanBird extends JLabel {
             try {
                 while (isAlive) {
                     int temp = getY();
-                    setLocation(50, temp + 1);
+                    setLocation(100, temp + 2);
                     Thread.sleep(8);
                 }
             } catch (InterruptedException e) {

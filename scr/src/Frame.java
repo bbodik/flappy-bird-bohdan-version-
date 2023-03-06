@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.event.*;
+import java.util.Random;
 
 public class Frame extends JFrame {
     private int score;
 
     Frame() {
+        Random rnd =new Random();
         setTitle("Flappy Bird");
         setResizable(false);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -19,7 +21,7 @@ public class Frame extends JFrame {
                 Thread jumpThread = new Thread(() -> {
                     for (int i = 0; i < 25; i++) {
                         int temp = bird.getY();
-                        bird.setLocation(50, temp - 6);
+                        bird.setLocation(100, temp - 6);
                         try {
                             Thread.sleep(12);
                         } catch (InterruptedException error) {
@@ -31,11 +33,31 @@ public class Frame extends JFrame {
             }
         });
         Thread firstCollum=new Thread(()->{
+            JLabel lbl=new JLabel(new ImageIcon("image/collums.png"));
+            lbl.setBounds(1300,-10,100,1000);
+            this.add(lbl);
+            lbl.setVisible(true);
+            while(bird.isAlive){
+                lbl.setLocation(1300,rnd.nextInt(26) - 25);
+                while (bird.isAlive){
+                    int temp=lbl.getX();
+                    lbl.setLocation(temp-3, lbl.getY());
+                    if(temp<0)break;
+                    System.out.println(lbl.getX()+"x"+lbl.getY());
+                    try {
+                        Thread.sleep(15);
+                    } catch (InterruptedException error) {
+                        System.exit(4);
+                    }
+                }
+            }
 
         });
         Thread secondCollum=new Thread(()->{
-
+            JLabel lbl=new JLabel(new ImageIcon("image/collums.png"));
         });
+        firstCollum.setDaemon(true);
+        firstCollum.start();
         add(backgroundLabel);
         setVisible(true);
     }
