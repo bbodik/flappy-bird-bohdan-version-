@@ -8,14 +8,17 @@ public class bohdanBird extends JLabel {
 
     bohdanBird(Frame frame) {
         super(new ImageIcon("./image/bird.png"));
-        setBounds(50, 300, 80, 80);
+        setBounds(100, 300, 80, 80);
         setVisible(true);
         t = new Thread(() -> {
             try {
                 while (isAlive) {
-                    int temp = getY();
-                    setLocation(100, temp + 2);
-                    Thread.sleep(8);
+                    if (getY() < 600) {
+                        int temp = getY();
+                        setLocation(100, temp + 3);
+                        Thread.sleep(8);
+                    }
+                    Thread.sleep(4);
                 }
             } catch (InterruptedException e) {
                 System.exit(1);

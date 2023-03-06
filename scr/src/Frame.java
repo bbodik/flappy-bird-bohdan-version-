@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
 
@@ -6,9 +7,10 @@ public class Frame extends JFrame {
     private int score;
 
     Frame() {
-        Random rnd =new Random();
+        Random rnd = new Random();
         setTitle("Flappy Bird");
-        setResizable(false);
+        setResizable(true);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(null);
         setBounds(50, 10, 1280, 720);
@@ -19,11 +21,13 @@ public class Frame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Thread jumpThread = new Thread(() -> {
-                    for (int i = 0; i < 25; i++) {
+                    for (int i = 0; i < 35; i++) {
                         int temp = bird.getY();
-                        bird.setLocation(100, temp - 6);
+                        if (bird.getY() > 0) {
+                            bird.setLocation(100, temp - 3);
+                        }
                         try {
-                            Thread.sleep(12);
+                            Thread.sleep(3);
                         } catch (InterruptedException error) {
                             System.exit(2);
                         }
@@ -32,32 +36,50 @@ public class Frame extends JFrame {
                 jumpThread.start();
             }
         });
-        Thread firstCollum=new Thread(()->{
-            JLabel lbl=new JLabel(new ImageIcon("image/collums.png"));
-            lbl.setBounds(1300,-10,100,1000);
-            this.add(lbl);
-            lbl.setVisible(true);
-            while(bird.isAlive){
-                lbl.setLocation(1300,rnd.nextInt(26) - 25);
-                while (bird.isAlive){
-                    int temp=lbl.getX();
-                    lbl.setLocation(temp-3, lbl.getY());
-                    if(temp<0)break;
-                    System.out.println(lbl.getX()+"x"+lbl.getY());
+        JLabel collumPNG = new JLabel(new ImageIcon("image/collums.png"));
+        collumPNG.setBounds(1290, rnd.nextInt(100) - 150, 100, 1000);
+        backgroundLabel.add(collumPNG);
+        Thread collum = new Thread(() -> {
+            while (bird.isAlive) {
+                collumPNG.setLocation(1290, rnd.nextInt(100) - 150);
+                while (bird.isAlive) {
+                    int temp = collumPNG.getX();
+                    if (temp < -100) break;
+                    collumPNG.setLocation(temp - 1, collumPNG.getY());
                     try {
-                        Thread.sleep(15);
-                    } catch (InterruptedException error) {
-                        System.exit(4);
+                        Thread.sleep(4);
+                    } catch (Exception e) {
+                        System.exit(6);
                     }
                 }
             }
-
         });
-        Thread secondCollum=new Thread(()->{
-            JLabel lbl=new JLabel(new ImageIcon("image/collums.png"));
+        collum.start();
+        JLabel collumPNG1 = new JLabel(new ImageIcon("image/collums.png"));
+        collumPNG1.setBounds(1290, rnd.nextInt(100) - 150, 100, 1000);
+        backgroundLabel.add(collumPNG1);
+        Thread collum1 = new Thread(() -> {
+            try {
+                Thread.sleep(4000);
+            } catch (Exception e) {
+                System.exit(6);
+            }
+            while (bird.isAlive) {
+                collumPNG1.setLocation(1290, rnd.nextInt(100) - 150);
+                while (bird.isAlive) {
+                    int temp = collumPNG1.getX();
+                    if (temp < -100) break;
+                    collumPNG1.setLocation(temp - 1, collumPNG1.getY());
+                    try {
+                        Thread.sleep(4);
+                    } catch (Exception e) {
+                        System.exit(6);
+                    }
+                }
+            }
         });
-        firstCollum.setDaemon(true);
-        firstCollum.start();
+        collum1.start();
+        backgroundLabel.add(bird);
         add(backgroundLabel);
         setVisible(true);
     }
