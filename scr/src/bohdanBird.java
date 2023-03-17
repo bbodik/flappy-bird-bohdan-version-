@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 public class bohdanBird extends JLabel {
     boolean isAlive = true;
     Thread t;
-//bogdan
     bohdanBird(Frame frame) {
         super(new ImageIcon("./image/bird.png"));
         setBounds(100, 300, 80, 80);
