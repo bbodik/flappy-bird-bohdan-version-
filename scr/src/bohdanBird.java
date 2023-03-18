@@ -4,6 +4,7 @@ import java.awt.event.ActionListener;
 
 public class bohdanBird extends JLabel {
     boolean isAlive = true;
+    private int Count=0;
     Thread t;
 
     bohdanBird(Frame frame) {
@@ -27,6 +28,13 @@ public class bohdanBird extends JLabel {
         t.start();
         frame.add(this);
     }
-
-
+public String getCountS(){
+        return String.valueOf(Count);
+}
+    public int getCount(){
+        return this.Count;
+    }
+public void setCount(int s){
+        Count=s;
+}
 }
